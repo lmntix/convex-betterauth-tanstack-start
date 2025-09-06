@@ -1,23 +1,18 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { Toaster } from 'sonner'
-import {
-  AppContainer,
-  AppHeader,
-  AppNav,
-  SettingsButton,
-  UserProfile,
-} from '@/components/server'
-import { SignOutButton } from '@/components/client'
-import { api } from '@convex/_generated/api'
-import { TodoList } from '@/components/TodoListServer'
-import { ModeToggle } from '@/components/mode-toggle'
-import { convexQuery } from '@convex-dev/react-query'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { authClient } from '@/lib/auth-client'
-import { useTransition } from 'react'
+import { api } from "@convex/_generated/api"
+import { convexQuery } from "@convex-dev/react-query"
+import { useSuspenseQuery } from "@tanstack/react-query"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { Authenticated } from "convex/react"
+import { useTransition } from "react"
+import { Toaster } from "sonner"
+import { SignOutButton } from "@/components/client"
+import { ModeToggle } from "@/components/mode-toggle"
+import { AppContainer, AppHeader, AppNav, SettingsButton, UserProfile } from "@/components/server"
+import { TodoList } from "@/components/TodoListServer"
+import { authClient } from "@/lib/auth-client"
 
-export const Route = createFileRoute('/_authed/server')({
-  component: ServerComponent,
+export const Route = createFileRoute("/_authed/server")({
+  component: ServerComponent
 })
 
 function ServerComponent() {
@@ -26,18 +21,20 @@ function ServerComponent() {
 
   return (
     <AppContainer>
-      <ModeToggle
-        isServer={true}
-        onSwitch={() => {
-          startTransition(() => {
-            void navigate({ to: '/client-only' })
-          })
-        }}
-        isPending={isPending}
-      />
-      <Header />
-      <TodoList />
-      <Toaster />
+      <Authenticated>
+        <ModeToggle
+          isServer={true}
+          onSwitch={() => {
+            startTransition(() => {
+              void navigate({ to: "/client-only" })
+            })
+          }}
+          isPending={isPending}
+        />
+        <Header />
+        <TodoList />
+        <Toaster />
+      </Authenticated>
     </AppContainer>
   )
 }
@@ -48,7 +45,7 @@ function Header() {
 
   const handleSignOut = async () => {
     await authClient.signOut()
-    void navigate({ to: '/sign-in' })
+    void navigate({ to: "/sign-in" })
   }
 
   return (
