@@ -24,6 +24,10 @@ CONVEX_SELF_HOSTED_ADMIN_KEY=convex-self-hosted|01ab534f4dab843921ac43aab3e3cfb7
 docker compose exec backend ./generate_admin_key.sh
 
 RESEND_API_KEY=your_resend_api_key
+
+
+Set this on convex dashboard
+SITE_URL=http://localhost:3000
 ```
 
 ### Installation & Development
