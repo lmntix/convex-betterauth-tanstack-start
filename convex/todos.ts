@@ -22,7 +22,8 @@ export const get = query({
     if (!userId) {
       // Don't throw on unauth for server-side compatibility - return empty array instead
       //temp solution - https://discord.com/channels/1019350475847499849/1413256246672494763/1413257121482407937
-      return []
+      throw new Error("Not authenticated2")
+      //return []
     }
     const getList = await ctx.db
       .query("todos")
