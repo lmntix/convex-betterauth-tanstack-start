@@ -8,8 +8,6 @@ const getUserId = async (ctx: QueryCtx) => {
   return (identity?.subject as Id<"users">) ?? null
 }
 
-getCurrentUserInternal(context)
-
 const requireUserId = async (ctx: QueryCtx) => {
   const userId = await getUserId(ctx)
   if (!userId) {

@@ -21,6 +21,7 @@ BETTER_AUTH_SECRET=ewfwegwegwgfwegeg
 CONVEX_SELF_HOSTED_URL=http://127.0.0.1:3210
 CONVEX_SELF_HOSTED_ADMIN_KEY=convex-self-hosted|01ab534f4dab843921ac43aab3e3cfb72ab406638cf473098e74359f35797f2df6394f51b0
 
+docker compose exec backend ./generate_admin_key.sh
 
 RESEND_API_KEY=your_resend_api_key
 ```
