@@ -2,7 +2,6 @@
 
 A full-stack TypeScript application built with TanStack Start, Convex backend, and Better Auth for authentication.
 
-
 ### Environment Setup
 
 Create a `.env.local` file with the following variables:
@@ -13,19 +12,16 @@ VITE_APP_URL=http://localhost:3000
 VITE_SITE_URL=http://localhost:3000
 SITE_URL=http://localhost:3000
 
-# Convex
-VITE_CONVEX_URL=your_convex_url
-VITE_CONVEX_SITE_URL=your_convex_site_url
-CONVEX_SELF_HOSTED_URL=your_convex_url
-CONVEX_SELF_HOSTED_ADMIN_KEY=your_admin_key
 
-# Social Auth (optional)
-GITHUB_CLIENT_ID=your_github_client_id
-GITHUB_CLIENT_SECRET=your_github_client_secret
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
+VITE_CONVEX_URL=http://127.0.0.1:3210
+VITE_CONVEX_SITE_URL=http://127.0.0.1:3211
 
-# Email (Resend)
+BETTER_AUTH_SECRET=ewfwegwegwgfwegeg
+
+CONVEX_SELF_HOSTED_URL=http://127.0.0.1:3210
+CONVEX_SELF_HOSTED_ADMIN_KEY=convex-self-hosted|01ab534f4dab843921ac43aab3e3cfb72ab406638cf473098e74359f35797f2df6394f51b0
+
+
 RESEND_API_KEY=your_resend_api_key
 ```
 
@@ -42,7 +38,6 @@ pnpm dev
 pnpm dev:web    # Start TanStack Start dev server (localhost:3000)
 pnpm dev:db     # Start Convex dev environment
 ```
-
 
 ## 🛠️ Development Commands
 

@@ -13,6 +13,7 @@ export const createAuth = (ctx: GenericCtx) =>
   betterAuth({
     baseURL: siteUrl,
     database: convexAdapter(ctx, betterAuthComponent),
+    trustedOrigins: ["http://127.0.0.1:3000"],
     account: {
       accountLinking: {
         enabled: true

@@ -1,11 +1,14 @@
 import { v } from "convex/values"
 import { Id } from "./_generated/dataModel"
-import { mutation, QueryCtx, query } from "./_generated/server"
+import { mutation, QueryCtx } from "./_generated/server"
+import { authedMutation, authedQuery } from "./lib/functions"
 
 const getUserId = async (ctx: QueryCtx) => {
   const identity = await ctx.auth.getUserIdentity()
   return (identity?.subject as Id<"users">) ?? null
 }
+
+getCurrentUserInternal(context)
 
 const requireUserId = async (ctx: QueryCtx) => {
   const userId = await getUserId(ctx)
@@ -15,26 +18,39 @@ const requireUserId = async (ctx: QueryCtx) => {
   return userId
 }
 
-export const get = query({
+// export const get = query({
+//   args: {},
+//   handler: async (ctx) => {
+//     const userId = await getUserId(ctx)
+//     if (!userId) {
+//       // Don't throw on unauth for server-side compatibility - return empty array instead
+//       //temp solution - https://discord.com/channels/1019350475847499849/1413256246672494763/1413257121482407937
+//       throw new Error("Not authenticated2")
+//       // return []
+//     }
+//     const getList = await ctx.db
+//       .query("todos")
+//       .withIndex("userId", (q) => q.eq("userId", userId))
+//       .order("desc")
+//       .collect()
+//     return getList
+//   }
+// })
+
+export const get = authedQuery({
   args: {},
   handler: async (ctx) => {
-    const userId = await getUserId(ctx)
-    if (!userId) {
-      // Don't throw on unauth for server-side compatibility - return empty array instead
-      //temp solution - https://discord.com/channels/1019350475847499849/1413256246672494763/1413257121482407937
-      throw new Error("Not authenticated2")
-      // return []
-    }
-    const getList = await ctx.db
+    const userId = await requireUserId(ctx)
+
+    return await ctx.db
       .query("todos")
       .withIndex("userId", (q) => q.eq("userId", userId))
       .order("desc")
       .collect()
-    return getList
   }
 })
 
-export const create = mutation({
+export const create = authedMutation({
   args: { text: v.string() },
   handler: async (ctx, args) => {
     const userId = await requireUserId(ctx)
